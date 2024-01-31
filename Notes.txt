@@ -1,0 +1,13 @@
+Akun :
+
+Admin
+username : administrator
+password : gunadarma
+
+Retana
+username : retana
+password : BpbdCianjur2023
+
+Kabid
+username : kabid
+password : BpbdCianjur2023

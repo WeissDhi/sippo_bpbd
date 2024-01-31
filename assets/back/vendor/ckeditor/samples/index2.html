@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>CKEditor Örnek</title>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" /> 
+        <script  src="https://code.jquery.com/jquery-3.4.1.js"  integrity="sha256-WpOohJOqMqqyKL9FccASB9O0KwACQJpFTUBLTYOVvVU="  crossorigin="anonymous"></script>
+        <!--Ckedtor ana dosyasını  ekleyelim-->
+        <script src="../ckeditor.js"></script><!--ckeditor dosyaları  bu  dosya ile aynı  dizinde-->
+        <!-- Bootstrap -->
+            <!-- Latest compiled and minified CSS -->
+            <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
+            <!-- Latest compiled and minified JavaScript -->
+            <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+        <!-- Bootstrap -->
+      <style>
+        #ajaxResult{
+            position: fixed;
+        }
+      </style>  
+  </head>
+    <body>
+        <form method="post" action="ajax.php" class="ajaxForm">
+            <textarea name="editor22" id="editor22" rows="10" cols="80" class="editor22">
+                Gelişmiş elemanları bulunan metin alanı
+            </textarea>
+            <input type="submit" value="Kaydet">
+        </form>
+       <script> 
+           CKEDITOR.replace('editor22',{
+		   
+           }); 
+        $(function () {
+            $('.ajaxForm').on('submit', function () {
+                    CKEDITOR.instances['editor22'].updateElement();//CKEditor  bilgileri  aktarıyor.
+                    
+                $.ajax({
+                    type   : 'POST',
+                    url    : $(this).attr('action'),
+                    data   : $(this).serializeArray(),
+                    success: function (returnData) {
+                        $('body').append(
+                            '<div id="ajaxResult" class="alert alert-' + returnData['status'] + ' alert-dismissable">' +
+                                '<i class="fa fa-check"></i>' +
+                                '<button aria-hidden="true" data-dismiss="alert" class="close" type="button">×</button>' +
+                                '' + returnData['msg'] +
+                            '</div>'
+                        );
+                        $('#ajaxResult').css({
+                            'left': (window.innerWidth - jQuery('#ajaxResult').width()) / 2,
+                            'top' : (window.innerHeight - jQuery('#ajaxResult').height()) / 2
+    				    });
+                    }
+                });		
+                return false;
+            });
+        });
+       </script> 
+    </body>
+</html>
